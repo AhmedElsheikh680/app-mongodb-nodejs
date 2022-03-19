@@ -20,7 +20,7 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
  async function createEmployee() {
     const emp = new Employee({
-        name: "Sayed",
+        name: "Ali",
         age: 54,
         department: ["C# Developer", "Nodejs Developer"],
         isApproved: true
@@ -28,4 +28,14 @@ const Employee = mongoose.model('Employee', employeeSchema);
    const data =  await emp.save();
    console.log(data);
 }
-createEmployee();
+// createEmployee();
+
+async function getEmployees(){
+   const emps =  await Employee.
+   find().
+   sort({name: 1})
+       .limit(2)
+   .select({name: 1, age:1,department:1, isApproved:1})
+   console.log(emps);
+}
+getEmployees();
