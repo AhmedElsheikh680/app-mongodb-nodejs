@@ -20,7 +20,7 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
  async function createEmployee() {
     const emp = new Employee({
-        name: "Ali",
+        name: "Ayman",
         age: 54,
         department: ["C# Developer", "Nodejs Developer"],
         isApproved: true
@@ -43,14 +43,82 @@ async function getEmployees(){
 }
 //getEmployees();
 
-async function updateEmployee(id) {
-     const emp =await Employee.findById(id);
-     if(!emp) {
-         console.log('Employee not Found!!');
-     }
-     emp.name="Ahmed Updated";
-     const data = await emp.save();
-     console.log(data);
+// async function updateEmployee(id) {
+//      const emp =await Employee.findById(id);
+//      if(!emp) {
+//          console.log('Employee not Found!!');
+//      }
+//      emp.name="Ahmed Updated";
+//      const data = await emp.save();
+//      console.log(data);
+//
+// }
+// updateEmployee('62363b06049cdc37ec77359d');
 
+// async function updateEmployee2(id){
+//     const emp = Employee.updateOne({_id: id},
+//         {
+//             $set: {name: 'Not Ahmed'}
+//         });
+//      console.log(emp+ ' Updaed Successfully!!');
+// }
+// updateEmployee2('62363b06049cdc37ec77359d');
+
+async function updateEmployee3(id){
+     const emp = await Employee.findByIdAndUpdate(id,{
+         $set:{name: 'Not Name'}
+     },{new: true});
+     console.log(emp + 'Updated');
 }
-updateEmployee('62363b06049cdc37ec77359d');
+
+// updateEmployee3('62363b33e08de04586ef2946');
+
+
+//Delete
+// async function deleteEmployee1(id){
+//      const emp = await Employee.deleteOne({_id: id});
+//      console.log(emp+ 'Deleted Successfully!!');
+// }
+// deleteEmployee1("62365001bd689bbce3e92992");
+
+async function deleteEmployee2(id){
+     const emp =await Employee.findByIdAndRemove(id);
+     console.log(emp+ 'Deleted Successfully!!');
+}
+deleteEmployee2("623650f656eab3a17562478f");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
