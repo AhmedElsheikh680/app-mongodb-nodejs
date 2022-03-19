@@ -11,7 +11,16 @@ const employeeSchema = new mongoose.Schema({
 
     name: {type: String, required: true},
     age: {type: Number, min: [24, 'Too Small'], max: 60},
-    department: [String],
+    department: {
+        type: Array,
+        validate: {
+            validator: function (params){
+                return params.length >0
+            },
+            message: 'You Must Choose A Department'
+        }
+
+    },
     date: {type:Date, default: Date.now()},
     isApproved: Boolean,
     job: {
@@ -33,9 +42,9 @@ const Employee = mongoose.model('Employee', employeeSchema);
  async function createEmployee() {
     const emp = new Employee({
         name: "Basma",
-        age: 54,
-        department: ["C# Developer", "Nodejs Developer"],
-        // isApproved: false,
+        age: 52,
+        // department: ["C# Developer", "Nodejs Developer"],
+        isApproved: false,
         job: 'HR',
         salary: 50045
     });
