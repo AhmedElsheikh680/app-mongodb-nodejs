@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/employees',{
 
 const employeeSchema = new mongoose.Schema({
 
-    name: String,
+    name: {type: String, required: true},
     age: {type: Number, min: 24, max: 60},
     department: [String],
     date: {type:Date, default: Date.now()},
@@ -20,13 +20,17 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
  async function createEmployee() {
     const emp = new Employee({
-        name: "Ayman",
+        name: "Eman",
         age: 54,
         department: ["C# Developer", "Nodejs Developer"],
         isApproved: true
     });
-   const data =  await emp.save();
-   console.log(data);
+     try{
+         const data =  await emp.save();
+         console.log(data);
+     }catch(error) {
+         console.log(error.message);
+     }
 }
 // createEmployee();
 
@@ -85,7 +89,7 @@ async function deleteEmployee2(id){
      const emp =await Employee.findByIdAndRemove(id);
      console.log(emp+ 'Deleted Successfully!!');
 }
-deleteEmployee2("623650f656eab3a17562478f");
+// deleteEmployee2("623650f656eab3a17562478f");
 
 
 
