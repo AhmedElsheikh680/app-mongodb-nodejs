@@ -10,20 +10,34 @@ mongoose.connect('mongodb://localhost/employees',{
 const employeeSchema = new mongoose.Schema({
 
     name: {type: String, required: true},
-    age: {type: Number, min: 24, max: 60},
+    age: {type: Number, min: [24, 'Too Small'], max: 60},
     department: [String],
     date: {type:Date, default: Date.now()},
-    isApproved: Boolean
+    isApproved: Boolean,
+    job: {
+      type: String,
+      enum: ['IT', 'HR', 'Sales'],
+        required: true
+    },
+    salary: {
+      type: Number,
+        required: function (){
+          return this.isApproved;
+        }
+    }
+
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
 
  async function createEmployee() {
     const emp = new Employee({
-        name: "Eman",
+        name: "Basma",
         age: 54,
         department: ["C# Developer", "Nodejs Developer"],
-        isApproved: true
+        // isApproved: false,
+        job: 'HR',
+        salary: 50045
     });
      try{
          const data =  await emp.save();
@@ -32,7 +46,7 @@ const Employee = mongoose.model('Employee', employeeSchema);
          console.log(error.message);
      }
 }
-// createEmployee();
+createEmployee();
 
 async function getEmployees(){
    const emps =  await Employee.
