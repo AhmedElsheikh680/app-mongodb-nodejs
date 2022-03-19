@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/employees',{
 
 const employeeSchema = new mongoose.Schema({
 
-    name: {type: String, required: true},
+    name: {type: String, required: true, trim:true, lowercase: true},
     age: {type: Number, min: [24, 'Too Small'], max: 60},
     department: {
         type: Array,
@@ -41,9 +41,9 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
  async function createEmployee() {
     const emp = new Employee({
-        name: "Basma",
+        name: "         Basma",
         age: 52,
-        // department: ["C# Developer", "Nodejs Developer"],
+        department: ["C# Developer", "Nodejs Developer"],
         isApproved: false,
         job: 'HR',
         salary: 50045
